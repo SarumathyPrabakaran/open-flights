@@ -1,0 +1,30 @@
+services:
+  pg11:
+    restart: always
+    image: postgres
+    container_name: pg11
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: open-flights_development
+    # healthcheck: 
+    #   test: curl --fail -I http://localhost:5432/ || exit 1
+    #   interval: 1s
+    #   timeout: 1s
+    #   retries: 60
+    ports:
+      - "5432:5432"
+
+
+  ruby_app:
+    build: ../src
+    container_name: ruby_app_container
+    ports:
+      - "3002:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      pg11:
+        condition: "service_started"
+    environment:
+      DATABASE_URL: postgres://postgres:test@pg11:5432/open-flights_development
+
