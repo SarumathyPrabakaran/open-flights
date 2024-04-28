@@ -1,9 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rails-app-deployment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: rails-app
   template:
     metadata:
       labels:
@@ -11,10 +14,10 @@ spec:
     spec:
       containers:
         - name: rails-app
-          image: sarumathy/ruby_app:latest
+          image: sarumathy/ruby_app:1
           ports:
             - containerPort: 3000
-           env:
+          env:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
@@ -24,4 +27,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rails-app-secrets
-                   key: secret-key-base
+                  key: secret-key-base

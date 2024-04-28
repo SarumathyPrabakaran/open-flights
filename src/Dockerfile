@@ -13,10 +13,11 @@ COPY Gemfile.lock ./Gemfile.lock
 RUN gem install bundler:2.3.6
 RUN bundle install
 RUN apt install npm -y
-RUN  npm install -g yarn -y
-RUN yarn install
-
+RUN npm install -g yarn -y
 COPY . .
+# RUN bundle exec rails webpacker:install
+RUN yarn install
+RUN yarn
 
 EXPOSE 3000
 
