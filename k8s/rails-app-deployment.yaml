@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rails-app
-          image: sarumathy/ruby_app:1
+          image: sarumathy/ruby_app:2
           ports:
             - containerPort: 3000
           env:
